@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="acorn.js"></script>
+  <script src="index.js"></script>
+
+  <script>
+		function printLn(text) {
+			var elem = document.getElementById('result')
+			elem.value = elem.value + text + '\n'
+		}
+    function runButton() {
+      var code = document.getElementById('code').value;
+      var interper = new Interper(window);
+			document.getElementById('result').value = null
+			var value
+			try {
+				value = interper.execute(code)
+			} catch(err) {
+				value = err
+			}
+			printLn(`\nresult:  ${value}`)
+    }
+  </script>
+
+  <style type="text/css">
+    textarea {
+      font-family: monospace;
+      font-size: larger;
+      height: 15em;
+      width: 100%;
+      max-width: 111ex;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>JS(es5) Interpreter</h1>
+
+  <p>
+    <textarea id="code">
+var result = [];
+function fibonacci(n, output) {
+  var a = 1, b = 1, sum;
+  for (var i = 0; i < n; i++) { 
+    output.push(a); 
+    sum=a + b; 
+    a=b; 
+    b=sum; 
+  } 
+} 
+fibonacci(16, result); 
+printLn(result)
+result
+    </textarea>
+    <br>
+    <button onclick="runButton()" id="runButton"> 运行 > </button>
+  </p>
+  <p>
+    <textarea id="result"></textarea>
+  </p>
+</body>
+
+</html>

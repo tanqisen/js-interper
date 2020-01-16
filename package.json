@@ -1,0 +1,26 @@
+{
+  "name": "js-interper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js --colors",
+    "start": "open ./index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanqisen/js-interper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanqisen/js-interper/issues"
+  },
+  "homepage": "https://github.com/tanqisen/js-interper#readme",
+  "dependencies": {
+    "mocha": "^7.0.0"
+  }
+}
