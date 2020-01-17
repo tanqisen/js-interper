@@ -68,6 +68,47 @@ it('hoisting 1', function () {
 	`)
 })
 
+it('call 10', function () {
+	assert.equal(_eval(`
+	var name = "The Window";
+
+	var object = {
+		name: "My Object",
+
+		getNameFunc: function () {
+			var that = this;
+			return function () {
+				return that.name;
+			};
+
+		}
+
+	};
+
+	object.getNameFunc()()
+	`), 'My Object')
+})
+
+it('call 9', function () {
+	assert.equal(_eval(`
+	var name = "The Window";
+
+	var object = {
+		name: "My Object",
+
+		getNameFunc: function () {
+			return function () {
+				return this.name;
+			};
+
+		}
+
+	};
+
+	object.getNameFunc()()
+	`), 'The Window')
+})
+
 it('closure 8', function () {
 	test(`
 	(function (a) {

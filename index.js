@@ -587,12 +587,15 @@ Interper.prototype.stepCallExpression = function (node) {
     let callee
 
     if (node.callee.type === 'CallExpression') {
+        obj = this._callObj || this.scope.vars
         callee = this.step(node.callee)
-        obj = this.native
+        this._callObj = callee
     } else {
         let funcRef = this.getReferenceOfNode(node.callee)
         callee = funcRef.getValue()
         obj = funcRef.obj
+
+        this._callObj = null
     }
 
     let preThis = this._curThis
