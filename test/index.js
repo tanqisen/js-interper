@@ -11,6 +11,31 @@ function test(code) {
 	assert.equal(_eval(code), eval(code))
 }
 
+it('hoisting global', function () {
+	test(`
+	function f1() {
+
+		var n = 999;
+
+		nAdd = function () { n += 1 }
+
+		function f2() {
+			return n
+		}
+
+		return f2;
+
+	}
+
+	var result = f1();
+
+	result(); // 999
+	nAdd();
+
+	result(); // 1000
+	`)
+})
+
 it('hoisting 5', function () {
 	test(`
 	function hoistVariable() {

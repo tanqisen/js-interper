@@ -6,6 +6,7 @@ let Interper = function (native) {
     this.native = native
     this.globalScope = { vars: {} }
     this.scope = this.globalScope
+    this.strict = false
 }
 
 Interper.prototype.execute = function (code) {
@@ -292,6 +293,10 @@ Interper.prototype.stepIdentifier = function (node) {
     return this.getReferenceOfNode(node).getValue()
 }
 Interper.prototype.stepLiteral = function (node) {
+    if (node.value === 'use strict') {
+        this.strict = true
+    }
+
     return node.value
 }
 Interper.prototype.stepRegExpLiteral = function (node) {
@@ -542,6 +547,12 @@ Interper.prototype.stepBinaryExpression = function (node) {
 Interper.prototype.stepAssignmentExpression = function (node) {
     const rightValue = this.step(node.right)
     let ref = this.getReferenceOfNode(node.left)
+    if (!this.strict) {
+        if (!ref || !ref.obj) {
+            this.defineVar(this.getNodeName(node.left), undefined, this.globalScope)
+            ref = this.getReferenceOfNode(node.left)
+        }
+    }
     let value = ref.getValue()
 
     switch (node['operator']) {
