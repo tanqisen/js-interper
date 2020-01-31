@@ -119,7 +119,6 @@ Interper.prototype.getReferenceOfNode = function (node) {
 
 Interper.prototype.getScopeForName = function (name) {
     let scope = this.scope
-    let parentScope = null
 
     while (scope) {
         if (this.hasVar(name, scope)) {
@@ -128,19 +127,9 @@ Interper.prototype.getScopeForName = function (name) {
 
         if (scope.environment) {
             scope = scope.environment
-            if (!parentScope) {
-                parentScope = scope.parent
-            }
         } else {
             scope = scope.parent
         }
-    }
-
-    while (parentScope) {
-        if (this.hasVar(name, parentScope)) {
-            return parentScope
-        }
-        parentScope = parentScope.parent
     }
 
     if (this.native && this.native.hasOwnProperty(name)) {
